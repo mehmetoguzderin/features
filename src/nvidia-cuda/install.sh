@@ -5,12 +5,12 @@ set -e
 # Clean up
 rm -rf /var/lib/apt/lists/*
 
-INSTALL_CUDNN=${INSTALLCUDNN}
-INSTALL_CUDNNDEV=${INSTALLCUDNNDEV}
-INSTALL_NVTX=${INSTALLNVTX}
-INSTALL_TOOLKIT=${INSTALLTOOLKIT}
-CUDA_VERSION=${CUDAVERSION}
-CUDNN_VERSION=${CUDNNVERSION}
+INSTALL_CUDNN="${INSTALLCUDNN:-"true"}"
+INSTALL_CUDNNDEV="${INSTALLCUDNNDEV:-"true"}"
+INSTALL_NVTX="${INSTALLNVTX:-"true"}"
+INSTALL_TOOLKIT="${INSTALLTOOLKIT:-"true"}"
+CUDA_VERSION="${CUDAVERSION:-"12.6"}"
+CUDNN_VERSION="${CUDNNVERSION:-"9.5.1.17"}"
 
 . /etc/os-release 
 
@@ -60,9 +60,9 @@ case $ARCH in
 esac
 
 # Add NVIDIA's package repository to apt so that we can download packages
-# Always use the ubuntu2004 repo because the other repos (e.g., debian11) are missing packages
-NVIDIA_REPO_URL="https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/$NVIDIA_ARCH"
-KEYRING_PACKAGE="cuda-keyring_1.0-1_all.deb"
+# Always use the ubuntu2204 repo because the other repos (e.g., debian11) are missing packages
+NVIDIA_REPO_URL="https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/$NVIDIA_ARCH"
+KEYRING_PACKAGE="cuda-keyring_1.1-1_all.deb"
 KEYRING_PACKAGE_URL="$NVIDIA_REPO_URL/$KEYRING_PACKAGE"
 KEYRING_PACKAGE_PATH="$(mktemp -d)"
 KEYRING_PACKAGE_FILE="$KEYRING_PACKAGE_PATH/$KEYRING_PACKAGE"
